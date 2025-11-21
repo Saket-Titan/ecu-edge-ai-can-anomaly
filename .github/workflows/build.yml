@@ -11,7 +11,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     
-    container: zephyrproject/zephyr-build:latest
+    container: zephyrprojectrtos/zephyr-build:latest
 
     steps:
       - name: Checkout
