@@ -18,6 +18,9 @@
     bus-speed = <500000>;
     bus-speed-data = <2000000>;
 };
+&iwdg {
+    status = "okay";
+};
 
 / {
     chosen {
