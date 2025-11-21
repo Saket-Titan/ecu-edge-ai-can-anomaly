@@ -6,6 +6,10 @@
 
 LOG_MODULE_REGISTER(ecu_engine, LOG_LEVEL_INF);
 
+#define MAX_PHYSICAL_RPM 8000 // assumed max engine speed is 8000 RPM
+#define MAX_RPM_JUMP 1000 // max RPM change per second
+
+
 const struct device *can_dev = DEVICE_DT_GET(DT_CHOSEN(zephyr_canbus));
 const struct device *wdt = DEVICE_DT_GET(DT_NODELABEL(iwdg)); // to get the independent watchdog device
 static const struct gpio_dt_spec button = GPIO_DT_SPEC_GET(DT_ALIAS(sw0),gpios);

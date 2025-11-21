@@ -13,7 +13,10 @@ static const struct gpio_dt_spec button = GPIO_DT_SPEC_GET(DT_ALIAS(sw0),gpios);
 void can_callback(const struct device *dev, struct can_frame *frame, void *user_data)
 {
     LOG_INF("Rx: ID=0x%08x DLC=%d Data=[%02X %02X]",
-              frame->id, frame->dlc, frame->data[3], frame->data[4]);
+              frame->id, 
+              frame->dlc, 
+              frame->data[3], 
+              frame->data[4]);
 }
 
 int main(void)
@@ -85,4 +88,5 @@ int main(void)
     return 0;
     
 }
+
 
