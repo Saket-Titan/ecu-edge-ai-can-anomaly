@@ -1,0 +1,32 @@
+name: Static analysis
+
+on:
+  push:
+    paths:s
+      - 'firmware/**'
+  pull_request:
+    paths:
+      - 'firmware/**'
+
+jobs:
+  static:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cppcheck clang-tidy
+
+      - name: Run cppcheck
+        run: |
+          cppcheck --enable=all --inconclusive --std=c99 --quiet firmware || true
+          # Export findings as file for review
+          cppcheck --enable=all --inconclusive --std=c99 --template='{file}:{line}:{message}' firmware 2> cppcheck-report.txt || true
+
+      - name: Upload cppcheck report
+        uses: actions/upload-artifact@v4
+        with:
+          name: cppcheck-report
+          path: cppcheck-report.txt
