@@ -1,5 +1,0 @@
-west:
-  command: /home/saket-jha/zephyrproject/.venv/bin/west build -p -b nucleo_g474re
-    firmware/ecu_engine
-  topdir: /home/saket-jha/zephyrproject
-  version: 1.4.0
