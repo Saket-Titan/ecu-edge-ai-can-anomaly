@@ -10,9 +10,29 @@ LOG_MODULE_REGISTER(ecu_engine, LOG_LEVEL_INF);
 #define MAX_RPM_JUMP 100 // max RPM change per 0.1 second or 100 ms
 #define COUNT 20 //keeping it low, to use single button for watchdog fault inj
 
+K_MSGQ_DEFINE(uds_rx_queue, sizeof(struct can_frame),10, 4);
+
 const struct device *can_dev = DEVICE_DT_GET(DT_CHOSEN(zephyr_canbus));
 const struct device *wdt = DEVICE_DT_GET(DT_NODELABEL(iwdg)); // to get the independent watchdog device
 static const struct gpio_dt_spec button = GPIO_DT_SPEC_GET(DT_ALIAS(sw0),gpios);
+
+
+// --- Start-> UDS-Request Callback Setup --- //
+
+void diagnostic_callback(const struct device *dev, struct can_frame *frame, void *user_data )
+{
+  //broadcast id is 0x10 for UDS request
+  //positive response adds 0x40
+
+  if(frame->data[1] == 0x10) // means service request
+  {
+    k_msgq_put(&uds_rx_queue, frame, K_NO_WAIT);
+    
+  }
+}
+
+// --- End-> UDS-Request Callback Setup --- //
+
 
 int main(void) 
 {
@@ -38,6 +58,9 @@ int main(void)
   
   // --- End -> Hardware Check --- //
 
+
+  // --- Start-> Watchdog setup --- //
+
   //watchdog setup min_window = 0ms , max_window = 2000ms to avoid early reset as we will feed it every 1000ms
   struct wdt_timeout_cfg wdt_config = {
     .window.min = 0,
@@ -52,21 +75,39 @@ int main(void)
     return 0;
 
   }
-
-  //button setup to simulate engine failure and RPM glitch
-  gpio_pin_configure_dt(&button, GPIO_INPUT);
-
   err = wdt_setup(wdt,0);
   if (err < 0) {
     LOG_ERR("watchdog setup failed: %d", err);
     return 0;
   }
+  
+  // --- End-> Watchdog setup --- //
 
 
-LOG_INF("CAN device ready: %s", can_dev->name);
+
+
+  //button setup to simulate engine failure and RPM glitch
+  gpio_pin_configure_dt(&button, GPIO_INPUT);
+
+  
+
+
+  LOG_INF("CAN device ready: %s", can_dev->name);
   
   int r = can_start(can_dev);
-  LOG_INF("Engine ECU (G474RE) starting... %d", r);
+
+  // --- Start-> UDS Diagnostic Filter --- //
+  struct can_filter diag_filter = {
+    .flags = 0,
+    .id = 0x7DF,
+    .mask = CAN_STD_ID_MASK
+  };
+  can_add_rx_filter(can_dev, &diagnostic_callback, NULL, &diag_filter);
+  // --- End-> UDS Diagnostic Filter --- //
+
+  LOG_INF("Engine ECU (G474RE) starting... %d \nListening for Diagnostics on 0x7DF... ", r);
+
+
   
   struct can_frame frame = {0}; // to avoid any wrong data exchange
   frame.flags = CAN_FRAME_IDE; // to ensure all the 29 bits is being sent 
@@ -89,13 +130,34 @@ LOG_INF("CAN device ready: %s", can_dev->name);
 
     int press_counter = 0;
     bool inject_glitch = false;
+
+    struct can_frame uds_rx_frame;
+
   
     while(1) {
 
       // // --- DEBUG ---
       // int btn_val = gpio_pin_get_dt(&button);
       // LOG_INF("Raw Button Value: %d", btn_val);
+        // --- Start->Putting UDS Response out of ISR --- //
+  if(k_msgq_get(&uds_rx_queue, &uds_rx_frame, K_NO_WAIT) == 0){
+    LOG_INF("UDS Request Received :  Diagnostic Session Control");
 
+    struct can_frame response = {0};
+    response.flags = 0;
+    response.id = 0x7E8;
+    response.dlc = 8;
+
+    // response format : [Len(2), Service+0x40 (positive response), Default Session(to Ping)]
+    response.data[0] = 0x02;
+    response.data[1] = 0x50;
+    response.data[2] = 0x01;
+
+    // send the respond back
+    can_send(can_dev, &response, K_NO_WAIT, NULL, NULL);
+    LOG_INF("UDS Positive Response");
+  }
+  // --- End->Putting UDS Response out of ISR --- //
 
       // // --- Start -> Button Press For RPM glitch and ENGINE Freeze Logic  ---
 
@@ -146,7 +208,7 @@ LOG_INF("CAN device ready: %s", can_dev->name);
         data_valid = false;
       }
 
-      if(previous_rpm != 0 && current_rpm != 0 && (current_rpm - previous_rpm) > MAX_RPM_JUMP  ) {
+      if(previous_rpm != 0 && current_rpm != 0 && abs(current_rpm - previous_rpm) > MAX_RPM_JUMP  ) {
         LOG_ERR("Safety Violation: RPM jump too high!");
         data_valid = false;
       }
@@ -155,17 +217,18 @@ LOG_INF("CAN device ready: %s", can_dev->name);
         uint16_t raw_rpm = (uint16_t)(current_rpm * 8);
         frame.data[3] = raw_rpm & 0xFF;
         frame.data[4] = (raw_rpm >> 8) & 0xFF;
-        int ret = can_send(can_dev, &frame, K_MSEC(100), NULL, NULL);
-    if(ret == 0){
-        LOG_INF("sent engine speed:%d RPM", current_rpm);
-      }
-    else {
-      LOG_ERR("send failed with error %d", ret);
-      }
+        int ret = can_send(can_dev, &frame, K_NO_WAIT, NULL, NULL);
+        if(ret == 0){
+            LOG_INF("sent engine speed:%d RPM", current_rpm);
+          }
+        else {
+          LOG_ERR("send failed with error %d", ret);
+          }
+        previous_rpm = current_rpm;
+
       }
 
 
-      previous_rpm = current_rpm;
     
     LOG_INF("Engine ECU running...  (Press button for shortly for rpm glitch injection or for 2 seconds to simulate engine failure)");
     k_sleep(K_MSEC(100));
