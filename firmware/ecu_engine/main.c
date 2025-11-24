@@ -59,6 +59,8 @@ int main(void)
   // --- End -> Hardware Check --- //
 
 
+
+
   // --- Start-> Watchdog setup --- //
 
   //watchdog setup min_window = 0ms , max_window = 2000ms to avoid early reset as we will feed it every 1000ms
@@ -82,6 +84,7 @@ int main(void)
   }
   
   // --- End-> Watchdog setup --- //
+
 
 
 
@@ -114,16 +117,6 @@ int main(void)
   frame.id = 0x18F00400; // the first two bit is to set priority 6, the middle for PGN, and the last 2 bits for the source address of engine.
   
   frame.dlc=8; // the standard data length 
-  
-  // frame.data[0] = 0xFF;
-  // frame.data[1] = 0xFF;
-  // frame.data[2] = 0xFF;
-  // frame.data[3] = 0xE0;
-  // frame.data[4] = 0x2E;
-  // frame.data[5] = 0xFF;
-  // frame.data[6] = 0xFF;
-  // frame.data[7] = 0xFF;
-
 
     int current_rpm = 0;
     int previous_rpm = 0;
@@ -133,14 +126,20 @@ int main(void)
 
     struct can_frame uds_rx_frame;
 
+    int64_t previous_time = 0;
+    int64_t now_time = 0;
+    int64_t duration = 0;
+
   
     while(1) {
 
       // // --- DEBUG ---
       // int btn_val = gpio_pin_get_dt(&button);
       // LOG_INF("Raw Button Value: %d", btn_val);
-        // --- Start->Putting UDS Response out of ISR --- //
-  if(k_msgq_get(&uds_rx_queue, &uds_rx_frame, K_NO_WAIT) == 0){
+
+
+  // --- Start->Putting UDS Response out of ISR --- //
+    if(k_msgq_get(&uds_rx_queue, &uds_rx_frame, K_NO_WAIT) == 0){
     LOG_INF("UDS Request Received :  Diagnostic Session Control");
 
     struct can_frame response = {0};
@@ -166,24 +165,27 @@ int main(void)
       
 
       if(gpio_pin_get_dt(&button) == 0) {
-        press_counter++;
-      
-      //if the user button not pressed, then feeding watchdog to avoid reset
-      if(press_counter > COUNT ){
-        LOG_WRN("FAULT INJECTED: Engine freeze simulated, not feeding watchdog");
-      }
-      else {
-        wdt_feed(wdt,wdt_channel_id);
-
-      }
-      }
-      else {
-        if(press_counter > 0 && press_counter <= COUNT){
-          LOG_INF("User Input : Injecting Sensor Glitch");
-          inject_glitch = true;
-        }
-        press_counter = 0;
+        now_time  = k_uptime_get();
+        if(previous_time == 0) {previous_time = now_time;}
         wdt_feed(wdt, wdt_channel_id);
+      }
+      else {
+        if(previous_time != 0){
+          duration = now_time - previous_time;
+          if(duration >= 2000){
+            LOG_WRN("FAULT INJECTED :  Engine Freeze, not feeding watchdog");
+
+          }
+          else if(duration < 2000){
+            LOG_INF("USER INPUT :  Injecting Sensor Glitch");
+            inject_glitch = true;
+            wdt_feed(wdt,wdt_channel_id);
+          }
+          previous_time = 0;
+        }
+        else {
+          wdt_feed(wdt,wdt_channel_id);
+        }
       }
 
       // // --- End -> Button Press For RPM glitch and ENGINE Freeze Logic  ---
