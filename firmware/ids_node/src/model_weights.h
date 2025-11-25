@@ -9,6 +9,6 @@ const float layer_1_w[] = {0.25889248f, 0.1874749f, 0.60050136f, -0.05472249f, -
 //layer1Biases
 const float layer_1_b[] = {-0.61519766f, -0.9745239f, -0.81601214f, -2.7941413f, -2.0981019f, -0.6851642f, -0.5465359f, -0.7918763f, };
 
-#define ANOMALY_THRESHOLD 0.05f
+#define ANOMALY_THRESHOLD 0.05f // it's more than 3*sd, but since the environment is controlled. we can use it.
 
 #endif
