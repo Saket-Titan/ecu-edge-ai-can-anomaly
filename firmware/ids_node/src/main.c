@@ -8,7 +8,7 @@
 
 
 
-LOG_MODULE_REGISTER(ecu_body, LOG_LEVEL_INF);
+LOG_MODULE_REGISTER(ids_node, LOG_LEVEL_INF);
 
 const struct device *can_dev = DEVICE_DT_GET(DT_CHOSEN(zephyr_canbus));
 const struct device *wdt = DEVICE_DT_GET(DT_NODELABEL(iwdg));
@@ -97,7 +97,7 @@ int main(void)
     };
     can_add_rx_filter(can_dev, &can_callback, NULL, &std_filter);
     
-    LOG_INF("ecu_body (H723ZG) listening on CAN-FD...");
+    LOG_INF("ids_node (H723ZG) listening on CAN-FD...");
 
     // --- Start-> Manual UDS request sending setup --- //
     struct can_frame diag_req = {0};

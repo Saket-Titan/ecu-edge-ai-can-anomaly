@@ -1,0 +1,10 @@
+default: ids_node
+build_dir: /home/saket-jha/zephyrproject/ecu-edge-ai-can-anomaly/build
+domains:
+  - name: ids_node
+    build_dir: /home/saket-jha/zephyrproject/ecu-edge-ai-can-anomaly/build/ids_node
+  - name: mcuboot
+    build_dir: /home/saket-jha/zephyrproject/ecu-edge-ai-can-anomaly/build/mcuboot
+flash_order:
+  - mcuboot
+  - ids_node

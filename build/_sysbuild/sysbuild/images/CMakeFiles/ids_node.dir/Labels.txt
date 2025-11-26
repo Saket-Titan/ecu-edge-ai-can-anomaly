@@ -1,0 +1,13 @@
+# Target labels
+ ids_node
+# Source files and their labels
+/home/saket-jha/zephyrproject/ecu-edge-ai-can-anomaly/build/_sysbuild/sysbuild/images/CMakeFiles/ids_node
+/home/saket-jha/zephyrproject/ecu-edge-ai-can-anomaly/build/_sysbuild/sysbuild/images/CMakeFiles/ids_node.rule
+/home/saket-jha/zephyrproject/ecu-edge-ai-can-anomaly/build/_sysbuild/sysbuild/images/CMakeFiles/ids_node-complete.rule
+/home/saket-jha/zephyrproject/ecu-edge-ai-can-anomaly/build/_sysbuild/sysbuild/images/ids_node-prefix/src/ids_node-stamp/ids_node-build.rule
+/home/saket-jha/zephyrproject/ecu-edge-ai-can-anomaly/build/_sysbuild/sysbuild/images/ids_node-prefix/src/ids_node-stamp/ids_node-configure.rule
+/home/saket-jha/zephyrproject/ecu-edge-ai-can-anomaly/build/_sysbuild/sysbuild/images/ids_node-prefix/src/ids_node-stamp/ids_node-download.rule
+/home/saket-jha/zephyrproject/ecu-edge-ai-can-anomaly/build/_sysbuild/sysbuild/images/ids_node-prefix/src/ids_node-stamp/ids_node-install.rule
+/home/saket-jha/zephyrproject/ecu-edge-ai-can-anomaly/build/_sysbuild/sysbuild/images/ids_node-prefix/src/ids_node-stamp/ids_node-mkdir.rule
+/home/saket-jha/zephyrproject/ecu-edge-ai-can-anomaly/build/_sysbuild/sysbuild/images/ids_node-prefix/src/ids_node-stamp/ids_node-patch.rule
+/home/saket-jha/zephyrproject/ecu-edge-ai-can-anomaly/build/_sysbuild/sysbuild/images/ids_node-prefix/src/ids_node-stamp/ids_node-update.rule

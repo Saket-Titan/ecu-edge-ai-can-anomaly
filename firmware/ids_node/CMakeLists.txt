@@ -4,6 +4,8 @@ find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
 
 project(ids_node)
 
+test_sysbuild()
+
 target_sources(app PRIVATE
     src/main.c
 )
