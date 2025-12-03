@@ -116,4 +116,39 @@ for layer in model.layers:
     print("};")
 
     layer_count += 1
-    
+  
+  print("TFLite Model (model_data.h)")
+
+converter = tf.lite.TFLiteConverter.from_keras_model(model)
+tflite_model = converter.convert()
+
+# print(tflite_model)
+
+f = open("model_data.h","w")
+f.write("#ifndef MODEL_DATA_H\n")
+f.write("#define MODEL_DATA_H\n")
+f.write("#include <stdlign.h>\n\n")
+
+f.write("const unsigned char g_model[] __attribute__((aligned(16))) = {\n")
+
+hex_line = ""
+byte_count = 0
+
+for byte_val in tflite_model:
+  hex_line += "0x{:02x}, ".format(byte_val)
+  byte_count += 1
+
+
+  if byte_count % 12 == 0:
+    f.write(hex_line + "\n")
+    hex_line = ""
+if len(hex_line) > 0:
+  f.write(hex_line + "\n")
+
+f.write("};\n\n")
+
+f.write("const int g_model_len = " + str(len(tflite_model)) + ";\n")
+f.write("#endif\n")
+
+f.close()
+
