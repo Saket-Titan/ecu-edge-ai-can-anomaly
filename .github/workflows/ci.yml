@@ -1,0 +1,34 @@
+name: Build Firmware & Tests
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: zephyrproject/zephyr-build:latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          path: application
+
+      - name: Initialize Zephyr
+        run: |
+          west init -l application
+          west update
+          west zephyr-export
+
+      - name: Build Engine ECU (G474RE)
+        run: |
+          cd application
+          west build -p always -b nucleo_g474re firmware/ecu_engine
+
+      - name: Build IDS Node (H723ZG) + MCUboot
+        run: |
+          cd application
+          west build --sysbuild -p always -b nucleo_h723zg firmware/ids_node
+
+      - name: Build Ztest Unit Tests
+        run: |
+          cd application
+          west build -p always -b nucleo_h723zg tests/unit/anomaly_score
