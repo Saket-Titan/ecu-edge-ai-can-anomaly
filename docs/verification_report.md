@@ -13,6 +13,7 @@ C-based math functions correctly distinguish between normal J1939 frames and ano
 |  Test ID  |   Description  |               Input Data               | Expected Result |  Status  |
 
 | **TC-01** | Normal Traffic | '[00 00 00 2E E0 00 00 00]' (1500 RPM) |   Score < 0.1   | **PASS** |
+
 | **TC-02** | Attack Traffic | '[00 12 55 AA BB CC DD EE]' (Noise)    |   Score > 0.1   | **PASS** |
 
 
