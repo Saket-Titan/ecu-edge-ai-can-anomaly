@@ -19,7 +19,7 @@ C-based math functions correctly distinguish between normal J1939 frames and ano
 ## Execution Logs
 
 *Captured from physical hardware (STM32H723ZG) via Serial Console.*
-
+```
 *** Booting Zephyr OS build v4.2.0-1599-g6558eca56cd3 ***
 Running TESTSUITE anomaly_suite
 ===================================================================
