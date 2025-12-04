@@ -1,0 +1,5 @@
+west:
+  command: /home/saket-jha/zephyrproject/.venv/bin/west build -p always -b nucleo_h723zg
+    anomaly_score
+  topdir: /home/saket-jha/zephyrproject
+  version: 1.4.0

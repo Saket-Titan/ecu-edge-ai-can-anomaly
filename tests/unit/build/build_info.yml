@@ -1,0 +1,58 @@
+cmake:
+  application:
+    configuration-dir: '/home/saket-jha/zephyrproject/ecu-edge-ai-can-anomaly/tests/unit/anomaly_score'
+    source-dir: '/home/saket-jha/zephyrproject/ecu-edge-ai-can-anomaly/tests/unit/anomaly_score'
+  board:
+    name: 'nucleo_h723zg'
+    path:
+     - '/home/saket-jha/zephyrproject/zephyr/boards/st/nucleo_h723zg'
+    qualifiers: 'stm32h723xx'
+    revision: ''
+  devicetree:
+    bindings-dirs:
+     - '/home/saket-jha/zephyrproject/zephyr/dts/bindings'
+    files:
+     - '/home/saket-jha/zephyrproject/zephyr/boards/st/nucleo_h723zg/nucleo_h723zg.dts'
+    include-dirs:
+     - '/home/saket-jha/zephyrproject/modules/hal/ambiq/dts'
+     - '/home/saket-jha/zephyrproject/modules/hal/atmel/include'
+     - '/home/saket-jha/zephyrproject/modules/hal/bouffalolab/include'
+     - '/home/saket-jha/zephyrproject/modules/hal/bouffalolab/include/zephyr'
+     - '/home/saket-jha/zephyrproject/modules/hal/gigadevice/include'
+     - '/home/saket-jha/zephyrproject/modules/hal/microchip/include'
+     - '/home/saket-jha/zephyrproject/modules/hal/microchip/dts'
+     - '/home/saket-jha/zephyrproject/modules/hal/nuvoton/dts'
+     - '/home/saket-jha/zephyrproject/modules/hal/nxp/dts'
+     - '/home/saket-jha/zephyrproject/modules/hal/stm32/dts'
+     - '/home/saket-jha/zephyrproject/modules/hal/ti/dts'
+     - '/home/saket-jha/zephyrproject/zephyr/include'
+     - '/home/saket-jha/zephyrproject/zephyr/include/zephyr'
+     - '/home/saket-jha/zephyrproject/zephyr/dts/common'
+     - '/home/saket-jha/zephyrproject/zephyr/dts/vendor'
+     - '/home/saket-jha/zephyrproject/zephyr/dts/rx'
+     - '/home/saket-jha/zephyrproject/zephyr/dts/x86'
+     - '/home/saket-jha/zephyrproject/zephyr/dts/xtensa'
+     - '/home/saket-jha/zephyrproject/zephyr/dts/sparc'
+     - '/home/saket-jha/zephyrproject/zephyr/dts/riscv'
+     - '/home/saket-jha/zephyrproject/zephyr/dts/posix'
+     - '/home/saket-jha/zephyrproject/zephyr/dts/arm64'
+     - '/home/saket-jha/zephyrproject/zephyr/dts/arm'
+     - '/home/saket-jha/zephyrproject/zephyr/dts/arc'
+     - '/home/saket-jha/zephyrproject/zephyr/dts'
+  kconfig:
+    files:
+     - '/home/saket-jha/zephyrproject/zephyr/boards/st/nucleo_h723zg/nucleo_h723zg_defconfig'
+     - '/home/saket-jha/zephyrproject/ecu-edge-ai-can-anomaly/tests/unit/anomaly_score/prj.conf'
+    user-files:
+     - '/home/saket-jha/zephyrproject/ecu-edge-ai-can-anomaly/tests/unit/anomaly_score/prj.conf'
+  toolchain:
+    name: 'zephyr'
+    path: '/home/saket-jha/zephyr-work/zephyr-sdk-0.17.2'
+  zephyr:
+    version: '4.2.99'
+    zephyr-base: '/home/saket-jha/zephyrproject/zephyr'
+version: '0.1.0'
+west:
+  command: '/home/saket-jha/zephyrproject/.venv/bin/west build -p always -b nucleo_h723zg anomaly_score'
+  topdir: '/home/saket-jha/zephyrproject'
+  version: '1.4.0'

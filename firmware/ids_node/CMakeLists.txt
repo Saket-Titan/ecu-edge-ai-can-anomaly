@@ -7,5 +7,6 @@ project(ids_node)
 test_sysbuild()
 
 target_sources(app PRIVATE
-    src/main.c
+    src/main.c 
+    src/manual_inference.c
 )
