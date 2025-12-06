@@ -5,14 +5,13 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
+    container: zephyrproject/zephyr-build:latest
     steps:
-      - uses: actions/checkout@v3
-        with:
-          path: application
-
-      - name: Setup Zephyr SDK & tools
-        uses: zephyrproject-rtos/action-zephyr-setup@v1
-
+      -name: Checkout
+       uses: actions/checkout@v3
+       with:
+         path: application
+         
       - name: Initialize Zephyr
         run: |
           west init -l application
