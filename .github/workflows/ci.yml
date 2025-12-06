@@ -5,7 +5,8 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: zephyrproject/zephyr-build:latest
+    container: ghcr.io/zephyrproject-rtos/zephyr-build:latest    
+    
     steps:
       - name: Checkout
         uses: actions/checkout@v3
