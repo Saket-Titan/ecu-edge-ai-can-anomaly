@@ -5,31 +5,39 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: ghcr.io/zephyrproject-rtos/zephyr-build:latest    
-    
     steps:
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: true
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
+
       - name: Checkout
         uses: actions/checkout@v3
         with:
           path: application
-         
-      - name: Initialize Zephyr
-        run: |
-          west init -l application
-          west update
-          west zephyr-export
 
-      - name: Build Engine ECU (G474RE)
-        run: |
-          cd application
-          west build -p always -b nucleo_g474re firmware/ecu_engine
+      - name: Build in Docker
+        uses: addnab/docker-run-action@v3
+        with:
+          image: ghcr.io/zephyrproject-rtos/zephyr-build:latest
+          options: -v ${{ github.workspace }}:/workdir -w /workdir
+          run: |
+            # Initialize Zephyr Workspace
+            west init -l application
+            west update
+            west zephyr-export
 
-      - name: Build IDS Node (H723ZG) + MCUboot
-        run: |
-          cd application
-          west build --sysbuild -p always -b nucleo_h723zg firmware/ids_node
+            # Build Project A: Engine ECU
+            west build -p always -b nucleo_g474re application/firmware/ecu_engine
 
-      - name: Build Ztest Unit Tests
-        run: |
-          cd application
-          west build -p always -b nucleo_h723zg tests/unit/anomaly_score
+            # Build Project B: IDS Node (Sysbuild)
+            west build --sysbuild -p always -b nucleo_h723zg application/firmware/ids_node
+
+            # Build Unit Tests
+            west build -p always -b nucleo_h723zg application/tests/unit/anomaly_score
