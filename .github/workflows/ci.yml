@@ -33,6 +33,7 @@ jobs:
             -w /workdir \
             ghcr.io/zephyrproject-rtos/zephyr-build:latest \
             /bin/bash -c "
+            git config --global --add safe.directory '*' &&
               west init -l application &&
               west update &&
               west zephyr-export &&
