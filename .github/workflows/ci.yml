@@ -28,20 +28,18 @@ jobs:
       - name: Build Firmware in Docker
         run: |
           docker run --rm \
+            --user root \
             -v ${{ github.workspace }}:/workdir \
             -w /workdir \
             ghcr.io/zephyrproject-rtos/zephyr-build:latest \
             /bin/bash -c "
-              # Initialize Zephyr Workspace
               west init -l application &&
               west update &&
               west zephyr-export &&
 
-              # Build Project A: Engine ECU
               echo 'Building Engine ECU...' &&
               west build -p always -b nucleo_g474re application/firmware/ecu_engine &&
 
-              # Build Project B: IDS Node (Sysbuild)
               echo 'Building IDS Node...' &&
               west build --sysbuild -p always -b nucleo_h723zg application/firmware/ids_node &&
 
