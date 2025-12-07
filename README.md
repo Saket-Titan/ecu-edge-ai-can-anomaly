@@ -40,11 +40,11 @@ graph LR
 
 
 ## Hardware & Software Stack
- . Microcontrollers: STM32G474RE (Engine), STM32H723ZG (Body)
- . RTOS: Zephyr RTOS (v3.7+)
- . Transceivers: Microchip MCP2562FD
- . Languages: C (Firmware), Python (ML Training)
- . Tools: West, CMake, Keras/TensorFlow, Imgtool, Ztest, Github Actions
+ * Microcontrollers: STM32G474RE (Engine), STM32H723ZG (Body)
+ * RTOS: Zephyr RTOS (v3.7+)
+ * Transceivers: Microchip MCP2562FD
+ * Languages: C (Firmware), Python (ML Training)
+ * Tools: West, CMake, Keras/TensorFlow, Imgtool, Ztest, Github Actions
 
  ## Repository Structure
       ├── firmware/
