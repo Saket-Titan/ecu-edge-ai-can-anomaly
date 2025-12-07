@@ -60,5 +60,32 @@ graph LR
 
 ## Verification & Results
   This Project focuses on verification-driven development. Key artifacts include:
-    1. Safety Analysis : 
-        . HARA (Hazard Analysis): Identified top-level hazards (e.g., Unintended Acceleration).
+    **1. Safety Analysis : **
+        * HARA (Hazard Analysis): Identified top-level hazards (e.g., Unintended Acceleration).
+        * FMEA (Failure Mode Analysis): Mapped software safety mechanisms to physical failures.
+    **2. Testing:**
+        * Unit Testing: AI Inference logic mathematically verified using Ztest. View Report
+        * System Testing: Validated system stability via 2-hour Soak Test.
+        * Security Testing: Verified Secure Boot and OTA ROllback via manual image swapping.
+        
+## Getting Started
+  **1.Prerequisites**
+      * Install Zephyr SDK
+      * Install Python dependencies: pip install -r ml/requirements.txt
+  **2.Build the Safety Node (Engine) **
+      ```west build -p always -b nucleo_g474re firmware/ecu_engine
+         west flash
+         ```
+ **3.Build the Security Node(Body)
+     Includes MCUboot and TinyML Model
+     ```west build --sysbuild -p always -b nucleo_h723zg firmware/ids_node
+        west flash
+        ```
+ **4. Run Unit Tests **
+     ```west build -p always -b nucleo_h723xg test/unit/anomaly_score```
+
+## Demo
+  * Video Demonstration:
+  * Live Metrics: System detects "Attack" traffic with a confidence score > 0.4 (Normal traffic < 0.1)
+
+Author: Saket Kumar License: MIT
