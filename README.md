@@ -44,7 +44,7 @@ graph LR
  . RTOS: Zephyr RTOS (v3.7+)
  . Transceivers: Microchip MCP2562FD
  . Languages: C (Firmware), Python (ML Training)
- .Tools: West, CMake, Keras/TensorFlow, Imgtool, Ztest, Github Actions
+ . Tools: West, CMake, Keras/TensorFlow, Imgtool, Ztest, Github Actions
 
  ## Repository Structure
       ├── firmware/
