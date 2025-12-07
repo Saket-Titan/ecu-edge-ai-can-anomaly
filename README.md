@@ -69,19 +69,19 @@ graph LR
         * Security Testing: Verified Secure Boot and OTA ROllback via manual image swapping.
         
 ## Getting Started
-  ***1.Prerequisites**
+  *1.Prerequisites
       * Install Zephyr SDK
       * Install Python dependencies: pip install -r ml/requirements.txt
-  ***2.Build the Safety Node (Engine) **
+  *2.Build the Safety Node (Engine) 
       ```west build -p always -b nucleo_g474re firmware/ecu_engine
          west flash
          ```
- ***3.Build the Security Node(Body)
+ *3.Build the Security Node(Body)
      Includes MCUboot and TinyML Model
      ```west build --sysbuild -p always -b nucleo_h723zg firmware/ids_node
         west flash
         ```
- ***4. Run Unit Tests **
+ *4. Run Unit Tests 
      ```west build -p always -b nucleo_h723xg test/unit/anomaly_score```
 
 ## Demo
