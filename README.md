@@ -58,20 +58,25 @@ graph LR
       └── .github/workflows/    # CI/CD Pipeline configuration
 
 
- ## Verification & Results
-     This Project focuses on verification-driven development. Key artifacts include:
-         1. Safety Analysis : 
-             * [HARA](./docs/HARA.md) (Hazard Analysis): Identified top-level hazards (e.g., Unintended Acceleration).
-             * [FMEA](./docs/FMEA.md) (Failure Mode Analysis): Mapped software safety mechanisms to physical failures.
-        2. Testing:
-            * Unit Testing: AI Inference logic mathematically verified using Ztest. View Report
-            * System Testing: Validated system stability via 2-hour Soak Test.
-            * Security Testing: Verified Secure Boot and OTA ROllback via manual image swapping.
-        
+## Verification & Results
+This Project focuses on verification-driven development. Key artifacts include:
+
+1. **Safety Analysis:**
+   - [HARA](./docs/HARA.md) (Hazard Analysis): Identified top-level hazards (e.g., Unintended Acceleration).
+   - [FMEA](./docs/FMEA.md) (Failure Mode Analysis): Mapped software safety mechanisms to physical failures.
+
+2. **Testing:**
+   - **Unit Testing:** AI Inference logic mathematically verified using Ztest. [View Report](./path/to/report)
+   - **System Testing:** Validated system stability via 2-hour Soak Test.
+   - **Security Testing:** Verified Secure Boot and OTA Rollback via manual image swapping.
+
 ## Getting Started
-  *1.Prerequisites
-      * Install Zephyr SDK
-      * Install Python dependencies: pip install -r ml/requirements.txt
+
+### 1. Prerequisites
+* Install Zephyr SDK
+* Install Python dependencies:
+  ```bash
+  pip install -r ml/requirements.txt
   *2.Build the Safety Node (Engine) 
       ```west build -p always -b nucleo_g474re firmware/ecu_engine
          west flash
