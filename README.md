@@ -77,13 +77,23 @@ This Project focuses on verification-driven development. Key artifacts include:
 * Install Python dependencies:
   ```bash
   pip install -r ml/requirements.txt
-  *2.Build the Safety Node (Engine) 
-      ```west build -p always -b nucleo_g474re firmware/ecu_engine
-         west flash
-         ```
+  
  ### 2. Build the Safety Node (Engine)
   ```bash
       west build -p always -b nucleo_g474re firmware/ecu_engine
+      west flash
+         
+  ```
+### 3. Build the Security Node (Body)
+Includes MCUboot and TinyML Model.
+  ```bash
+    west build  --sysbuild -p always -b nucleo_h723zg firmware/ids_node
+    west flash
+```
+         
+ ### 4. Run Unit Tests
+  ```bash
+      west build -p always -b mucleo_h723zg tests/unit/anomaly_score
       west flash
          
   ```
