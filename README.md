@@ -67,8 +67,8 @@ This Project focuses on verification-driven development. Key artifacts include:
 
 2. **Testing:**
    - **Unit Testing:** AI Inference logic mathematically verified using Ztest. [View Report](./path/to/report)
-   - **System Testing:** Validated system stability via 2-hour Soak Test.
-   - **Security Testing:** Verified Secure Boot and OTA Rollback via manual image swapping.
+   - **System Testing:** Validated system stability via 2-hour [Soak Test.](docs/soak_report.md)
+   - **Security Testing:** Verified Secure Boot and OTA Rollback via manual image swapping. [View Report](docs/verification_report.md)
 
 ## Getting Started
 
