@@ -83,9 +83,9 @@ This Project focuses on verification-driven development. Key artifacts include:
          ```
  ### 2. Build the Safety Node (Engine)
   ```bash
-      ```west build -p always -b nucleo_g474re firmware/ecu_engine
-         west flash
-         ```
+      west build -p always -b nucleo_g474re firmware/ecu_engine
+      west flash
+         
   ```
 ## Demo
   * Video Demonstration:
