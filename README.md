@@ -66,9 +66,9 @@ This Project focuses on verification-driven development. Key artifacts include:
    - [FMEA](./docs/FMEA.md) (Failure Mode Analysis): Mapped software safety mechanisms to physical failures.
 
 2. **Testing:**
-   - **Unit Testing:** AI Inference logic mathematically verified using Ztest. [View Report](./path/to/report)
+   - **Unit Testing:** AI Inference logic mathematically verified using Ztest. [View Report](docs/verification_report.md)
    - **System Testing:** Validated system stability via 2-hour [Soak Test.](docs/soak_report.md)
-   - **Security Testing:** Verified Secure Boot and OTA Rollback via manual image swapping. [View Report](docs/verification_report.md)
+   - **Security Testing:** Verified Secure Boot and OTA Rollback via manual image swapping. 
 
 ## Getting Started
 
