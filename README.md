@@ -60,10 +60,10 @@ graph LR
 
  ## Verification & Results
   This Project focuses on verification-driven development. Key artifacts include:
-    **1. Safety Analysis : **
+    1. Safety Analysis : 
         * [HARA](./docs/HARA.md) (Hazard Analysis): Identified top-level hazards (e.g., Unintended Acceleration).
         * [FMEA](./docs/FMEA.md) (Failure Mode Analysis): Mapped software safety mechanisms to physical failures.
-    **2. Testing:**
+    2. Testing:
         * Unit Testing: AI Inference logic mathematically verified using Ztest. View Report
         * System Testing: Validated system stability via 2-hour Soak Test.
         * Security Testing: Verified Secure Boot and OTA ROllback via manual image swapping.
