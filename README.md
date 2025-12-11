@@ -58,7 +58,7 @@ graph LR
       └── .github/workflows/    # CI/CD Pipeline configuration
 
 
-## Verification & Results
+ ## Verification & Results
   This Project focuses on verification-driven development. Key artifacts include:
     **1. Safety Analysis : **
         * [HARA](./docs/HARA.md) (Hazard Analysis): Identified top-level hazards (e.g., Unintended Acceleration).
