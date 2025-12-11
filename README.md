@@ -2,7 +2,7 @@
 # Automotive Safety & Security ECU Prototype
 **ISO 26262 Functional Safety | TinyML Intrusion Detection | Zephyr RTOS**
 
-
+[![Build Firmware](https://github.com/Saket-Titan/ecu-edge-ai-can-anomaly/actions/workflows/ci.yml/badge.svg)](https://github.com/Saket-Titan/ecu-edge-ai-can-anomaly/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Executive Summary
