@@ -86,7 +86,7 @@ This Project focuses on verification-driven development. Key artifacts include:
       ```west build -p always -b nucleo_g474re firmware/ecu_engine
          west flash
          ```
-
+  ```
 ## Demo
   * Video Demonstration:
   * Live Metrics: System detects "Attack" traffic with a confidence score > 0.4 (Normal traffic < 0.1)
