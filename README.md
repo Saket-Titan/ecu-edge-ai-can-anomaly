@@ -3,7 +3,7 @@
 **ISO 26262 Functional Safety | TinyML Intrusion Detection | Zephyr RTOS**
 
 [![Build Firmware](https://github.com/Saket-Titan/ecu-edge-ai-can-anomaly/actions/workflows/ci.yml/badge.svg)](https://github.com/Saket-Titan/ecu-edge-ai-can-anomaly/actions)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ## Executive Summary
 This project demonstrates a production-grade automotive architecture integrating **Functional Safety (ASIL-B)** and **Cybersecurity (Edge AI)**.
@@ -101,4 +101,4 @@ Includes MCUboot and TinyML Model.
   * Video Demonstration:
   * Live Metrics: System detects "Attack" traffic with a confidence score > 0.4 (Normal traffic < 0.1)
 
-Author: Saket Kumar License: MIT
+Author: Saket Kumar License: Apache-2.0
